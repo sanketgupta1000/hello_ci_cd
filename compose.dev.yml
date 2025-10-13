@@ -1,0 +1,20 @@
+# compose file for development
+
+services:
+  backend:
+    build:
+      context: .
+      target: dev
+    develop:
+      watch:
+        - path: ./src
+          action: sync
+          target: /hello_ci_cd/src
+        - path: ./index.js
+          action: sync
+          target: /hello_ci_cd/index.js
+        # rebuild if any deps change
+        - path: ./package.json
+          action: rebuild
+    ports:
+      - "8080:80"
