@@ -1,9 +1,9 @@
 name: CI - Test Application
 
 on:
-  # only run while pull requested on main branch
+  # only run while pull requested on master branch
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   test:
