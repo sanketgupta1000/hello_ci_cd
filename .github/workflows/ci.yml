@@ -14,7 +14,8 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Run tests with Docker Compose
-      run: docker compose -f compose.test.yml up
+      run: docker compose -f compose.test.yml up --abort-on-container-exit --exit-code-from backend
       
     - name: Clean up
+      if: always()
       run: docker compose -f compose.test.yml down --rmi all
