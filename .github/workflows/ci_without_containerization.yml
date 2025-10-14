@@ -1,0 +1,42 @@
+# this time, will try to create a CI workflow without containerization
+# no issues, anyways GitHub provides us virtualized machines so that we can do anything on them without worrying about inconsistencies in version which Docker aims to solve
+
+name: CI - Test Application Without Containerization
+on:
+  # only run while pull requested on master branch
+  pull_request:
+    branches: [ master ]
+jobs:
+  # first install nodejs
+  setup_node:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '22.15.0'
+        
+  install_dependencies:
+    runs-on: ubuntu-latest
+    # specify dependency on setup_node job
+    needs: setup_node
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Install dependencies
+      run: npm install
+  
+  test:
+    runs-on: ubuntu-latest
+    # specify dependency on install_dependencies job
+    needs: install_dependencies
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Run tests
+      run: npm test
