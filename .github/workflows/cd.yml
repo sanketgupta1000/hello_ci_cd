@@ -14,7 +14,11 @@ jobs:
 
     steps:
 
-      # first login
+      # checkout code first
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # then login to dockerhub
       - name: Docker Login
         uses: docker/login-action@v3.6.0
         with:
@@ -23,15 +27,21 @@ jobs:
           # Password or personal access token used to log against the Docker registry
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
 
+      # then generate timestamp
+      - name: Generate timestamp
+        id: timestamp
+        run: echo "timestamp=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+
       # then build and push
       - name: Build and push Docker images
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
           file: ./Dockerfile
+          push: true
           # List of tags
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/hello_ci_cd:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/hello_ci_cd:$(date +'%Y%m%d%H%M%S')
+            ${{ secrets.DOCKERHUB_USERNAME }}/hello_ci_cd:${{ steps.timestamp.outputs.timestamp }}
           # Sets the target stage to build
           target: final
