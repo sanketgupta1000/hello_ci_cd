@@ -10,4 +10,10 @@ app.get('/hellocicd', (req, res) => {
     res.send('Hello CI/CD!')
 })
 
+// add another endpoint to test for second workflow added
+app.get('/abcd', (req, res)=>
+{
+    res.send('Hello abcd!');
+});
+
 module.exports = app;
