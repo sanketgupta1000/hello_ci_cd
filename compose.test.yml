@@ -1,7 +1,7 @@
 # compose file for development
 
 services:
-  backend:
+  backendtest:
     build:
       context: .
       target: test
