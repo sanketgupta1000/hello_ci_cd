@@ -4,8 +4,6 @@ on:
   # only run while pull requested on master branch
   pull_request:
     branches: [ master ]
-  push:
-    branches: [ master ]
 
 jobs:
   test:
