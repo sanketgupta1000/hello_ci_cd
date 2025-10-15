@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 
+// bad change, shouldn't be deployed to production
 app.get('/hello', (req, res) => {
-    res.send('Hello World!');
+    res.send('Hello!');
 });
 
 // dynamic endpoint
